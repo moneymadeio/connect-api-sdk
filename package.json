@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moneymadeio/mm-connect-api-nodejs-sdk.git"
+    "url": "https://github.com/moneymadeio/connect-api-sdk"
   },
   "author": "moneymade.io",
   "license": "ISC",
