@@ -1,2 +1,5 @@
 export * from './sdk';
-export * from './api/link-token/link-token';
+
+export * from './api/currencies';
+export * from './api/users';
+export * from './api/providers';
