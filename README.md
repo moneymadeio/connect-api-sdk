@@ -39,7 +39,8 @@ const moneymade = new MoneymadeSDK({
           ```
       
       2. ###### Get user by id:
-          `await moneymade.users.getOne('userId')`
+          
+          ```await moneymade.users.getOne('userId')```
 
           Method returns user object with accounts array:
 
@@ -68,12 +69,12 @@ const moneymade = new MoneymadeSDK({
                   }
                 }
               ]
-            }
+          }
           ```
       3. ###### Get user account:
           Get user account objecct with subaccounts by userId and accountId
 
-          `await moneymade.users.getAccount({ userId: '', accountId: '' })`
+          ```await moneymade.users.getAccount({ userId: '', accountId: '' })```
 
           Method returns account object with provider info and subaccounts:
 
@@ -99,18 +100,17 @@ const moneymade = new MoneymadeSDK({
                 }
               ]
             }
-
           ```
 
       3. ###### Remove user account:
-          `await moneymade.users.removeAccount({ userId: '', accountId: '' })`
+          ```await moneymade.users.removeAccount({ userId: '', accountId: '' })```
 
           Method removes account from user. Returns void.
 
   2. ##### Providers API:
       1. ###### Get providers list:
 
-          `await moneymade.providers.getList()`
+          ```await moneymade.providers.getList()```
   
           Method returns array with providers:
           
@@ -131,7 +131,7 @@ const moneymade = new MoneymadeSDK({
           ```
       2. ###### Get provider by slug:
 
-          `await moneymade.providers.getOne('coinbase')`
+          ```await moneymade.providers.getOne('coinbase')```
 
           Method returns provider object:
 
@@ -150,7 +150,7 @@ const moneymade = new MoneymadeSDK({
           ```
 
     3. ##### Currencies API:
-          `await moneymade.currencies.getList()`
+          ```await moneymade.currencies.getList()```
 
           Method returns currencies list:
   
