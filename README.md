@@ -109,5 +109,69 @@ const moneymade = new MoneymadeSDK({
 
   2. ##### Providers API:
       1. ###### Get providers list:
-      
+
+          `await moneymade.providers.getList()`
+  
+          Method returns array with providers:
+          
+          ```
+          [
+            {
+              id: 1,
+              name: 'Coinbase',
+              slug: 'coinbase',
+              strategy: 'oauth',
+              connector: 'coinbase',
+              description: 'Buy and sell cryptocurrency. Coinbase is the easiest place to buy, sell, and manage your cryptocurrency portfolio.',
+              website: 'https://www.coinbase.com',
+              tags: [],
+              logo: 'https://firebasestorage.googleapis.com/v0/b/benchmark-media.appspot.com/o/logos%2F1598311540327_Screen%20Shot%202020-08-24%20at%204.25.31%20PM.png?alt=media'
+            }
+          ]
+          ```
+      2. ###### Get provider by slug:
+
+          `await moneymade.providers.getOne('coinbase')`
+
+          Method returns provider object:
+
+          ```
+          {
+            id: 1,
+            name: 'Coinbase',
+            slug: 'coinbase',
+            strategy: 'oauth',
+            connector: 'coinbase',
+            description: 'Buy and sell cryptocurrency. Coinbase is the easiest place to buy, sell, and manage your cryptocurrency portfolio.',
+            website: 'https://www.coinbase.com',
+            tags: [],
+            logo: 'https://firebasestorage.googleapis.com/v0/b/benchmark-media.appspot.com/o/logos%2F1598311540327_Screen%20Shot%202020-08-24%20at%204.25.31%20PM.png?alt=media'
+          }  
+          ```
+
+    3. ##### Currencies API:
+          `await moneymade.currencies.getList()`
+
+          Method returns currencies list:
+  
+          ```
+          {
+            data: [
+              {
+                id: 1,
+                currency: '1INCH',
+                name: '1inch',
+                type: 'cryptocurrency',
+                logo: null
+              },
+              {
+                id: 2,
+                currency: 'AAVE',
+                name: 'Aave',
+                type: 'cryptocurrency',
+                logo: null
+              }
+            ]
+          }
+          ```
 
