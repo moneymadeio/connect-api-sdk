@@ -7,7 +7,7 @@
   "scripts": {
     "test": "node -r dotenv/config $(which jest) --silence=false",
     "build": "rimraf dist && tsc",
-    "common": "npm run build && npm version patch && npm publish"
+    "deploy": "npm run build && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
