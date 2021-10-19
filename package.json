@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "node -r dotenv/config $(which jest) --silence=false",
+    "test": "node -r dotenv/config $(which jest) --silence=false --testTimeout=60000",
     "build": "rimraf dist && tsc",
     "deploy": "npm run build && npm version patch && npm publish --access=public"
   },
@@ -22,11 +22,12 @@
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "12",
+    "dotenv": "^10.0.0",
     "jest": "^27.2.0",
     "rimraf": "^3.0.2",
+    "socket.io-client": "^4.3.2",
     "ts-jest": "^27.0.5",
-    "typescript": "^4.4.3",
-    "dotenv": "^10.0.0"
+    "typescript": "^4.4.3"
   },
   "dependencies": {
     "axios": "^0.21.4"

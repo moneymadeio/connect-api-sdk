@@ -4,7 +4,7 @@ import * as api from './api';
 import { makeSign } from './core/signature';
 
 const { DEVELOPMENT_URL } = process.env;
-const BASE_API_URL = DEVELOPMENT_URL || 'https://stage-connect-api.moneymade.io/api';
+export const BASE_API_URL = DEVELOPMENT_URL || 'https://stage-connect-api.moneymade.io/api';
 
 export class MoneymadeSDK {
   private axios: AxiosInstance;
