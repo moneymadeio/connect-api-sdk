@@ -7,7 +7,7 @@ export class Providers extends API {
     return this.request({});
   }
 
-  async getOne(slug: string) {
+  async getOne(slug: string): Promise<Providers.Provider> {
     return this.request({ url: slug });
   }
 }
