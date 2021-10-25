@@ -12,6 +12,7 @@ export class MoneymadeSDK {
   currencies: api.Currencies;
   users: api.Users;
   providers: api.Providers;
+  transactions: api.Transactions;
 
   constructor(config: MoneymadeSDK.Config) {
     this.axios = Axios.create({
@@ -42,6 +43,7 @@ export class MoneymadeSDK {
     this.currencies = new api.Currencies(this.axios);
     this.users = new api.Users(this.axios);
     this.providers = new api.Providers(this.axios);
+    this.transactions = new api.Transactions(this.axios);
   }
 }
 

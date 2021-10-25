@@ -18,4 +18,9 @@ export namespace API {
   export interface PageResponse<T> {
     data: T[];
   }
+
+  export interface PaginatedRequest {
+    limit?: number;
+    offset?: number;
+  }
 }
