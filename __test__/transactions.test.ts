@@ -1,6 +1,10 @@
 import { sdk, testAccountId, testUserId } from './env';
 
 describe('transactions API', () => {
+  beforeAll(async () => {
+    await sdk.init();
+  });
+
   describe('getList', () => {
     it('should return pagintated data', async () => {
       const trs = await sdk.transactions.getList({

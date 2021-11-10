@@ -1,6 +1,10 @@
 import { sdk, testUserId, testAccountId, connectTestAccount } from './env';
 
 describe(`user API`, () => {
+  beforeAll(async () => {
+    await sdk.init();
+  });
+
   describe('create user', () => {
     let accountId;
 

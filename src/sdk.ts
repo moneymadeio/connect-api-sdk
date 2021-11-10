@@ -4,7 +4,7 @@ import * as api from './api';
 import { makeSign } from './core/signature';
 
 const { DEVELOPMENT_URL } = process.env;
-export const BASE_API_URL = DEVELOPMENT_URL || 'https://stage-connect-api.moneymade.io/api';
+export const PROJECT_API_URL = DEVELOPMENT_URL || 'https://project-api-dot-moneymade-connect.uc.r.appspot.com';
 
 export class MoneymadeSDK {
   private axios: AxiosInstance;
@@ -14,11 +14,28 @@ export class MoneymadeSDK {
   providers: api.Providers;
   transactions: api.Transactions;
 
-  constructor(config: MoneymadeSDK.Config) {
+  constructor(private config: MoneymadeSDK.Config) {}
+
+  async getProjectUrls() {
+    const { apiKey } = this.config;
+    const { data } = await Axios.get(
+      `${PROJECT_API_URL}/api/v1/environment`,
+      { headers: { ['api-key']: apiKey } },
+    );
+
+    return {
+      base_api_url: data.account_api_url,
+      ws_api_url: data.ws_api_url,
+    }
+  }
+
+  async init() {
+    const { base_api_url } = await this.getProjectUrls();
+
     this.axios = Axios.create({
-      baseURL: `${BASE_API_URL}/${config.apiVersion || 'v1'}`,
+      baseURL: `${base_api_url}/api/${this.config.apiVersion || 'v1'}`,
       headers: {
-        ['x-mm-api-key']: config.apiKey,
+        ['x-mm-api-key']: this.config.apiKey,
         ['content-type']: 'application/json',
       },
     });
@@ -27,10 +44,10 @@ export class MoneymadeSDK {
       (request) => {
         const timestamp = Date.now();
 
-        request.headers['x-mm-api-key'] = config.apiKey;
+        request.headers['x-mm-api-key'] = this.config.apiKey;
         request.headers['x-mm-request-timestamp'] = timestamp;
         request.headers['x-mm-request-signature'] = makeSign({
-          secretKey: config.secret,
+          secretKey: this.config.secret,
           timestamp,
           requestUrl: `${request.baseURL}/${request.url}`,
           body: request.data ? request.data : '',

@@ -1,6 +1,10 @@
 import { sdk } from './env';
 
 describe('Providers API', () => {
+  beforeAll(async () => {
+    await sdk.init();
+  });
+
   it(`getList should return providers`, async () => {
     const { data } = await sdk.providers.getList();
 
@@ -21,12 +25,12 @@ describe('Providers API', () => {
   it(`getOne should return provider by id`, async () => {
     expect(await sdk.providers.getOne('binance')).toEqual(
       expect.objectContaining({
-        id: 16,
-        name: 'Binance',
-        slug: 'binance',
-        strategy: 'keys',
+        id: expect.any(Number),
+        name: expect.any(String),
+        slug: expect.any(String),
+        strategy: expect.any(String),
         description: expect.any(String),
-        website: 'https://www.binance.com',
+        website: expect.any(String),
         logo: expect.any(String),
       }),
     );

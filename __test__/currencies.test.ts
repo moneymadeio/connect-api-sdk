@@ -1,6 +1,10 @@
 import { sdk } from './env';
 
 describe(`currencies API`, () => {
+  beforeAll(async () => {
+    await sdk.init();
+  });
+
   it(`should return data with currencies array`, async () => {
     const data = await sdk.currencies.getList();
 
