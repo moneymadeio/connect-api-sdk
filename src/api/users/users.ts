@@ -46,7 +46,7 @@ export namespace Users {
     currency: string;
     balance: string;
     type: string;
-    fiat_balance: string;
+    fiat_balance: number;
     balance_updated_at: string;
     updated_at: string;
   }

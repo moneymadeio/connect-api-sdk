@@ -123,7 +123,7 @@ describe(`user API`, () => {
           currency: expect.any(String),
           balance: expect.any(String),
           type: expect.any(String),
-          fiat_balance: expect.any(String),
+          fiat_balance: expect.any(Number),
           balance_updated_at: expect.any(String),
           updated_at: expect.any(String),
         })
