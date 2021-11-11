@@ -29,7 +29,7 @@ export class MoneymadeSDK {
     }
   }
 
-  async init() {
+  async init(): Promise<MoneymadeSDK> {
     const { base_api_url } = await this.getProjectUrls();
 
     this.axios = Axios.create({
@@ -61,6 +61,8 @@ export class MoneymadeSDK {
     this.users = new api.Users(this.axios);
     this.providers = new api.Providers(this.axios);
     this.transactions = new api.Transactions(this.axios);
+
+    return this;
   }
 }
 

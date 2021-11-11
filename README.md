@@ -7,6 +7,8 @@ const moneymade = new MoneymadeSDK({
   apiKey: 'API_KEY',
   secret: 'SECRET',
 });
+
+moneymade.init(); // don't forget to run init method
 ```
 
 ### Usage:
