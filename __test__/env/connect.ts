@@ -27,7 +27,7 @@ export const connectTestAccount = () => {
 
       const rejectTimeout = setTimeout(
         () => reject('Timeout for CONNECTION_SUCCESS failed'),
-        5000,
+        10000,
       );
       
       socket.on('STATUS', (data) => {
