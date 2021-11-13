@@ -42,6 +42,7 @@ export namespace Users {
   }
 
   export interface Subaccount {
+    id: string;
     name: string;
     currency: string;
     balance: string;

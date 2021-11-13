@@ -64,6 +64,7 @@ describe(`user API`, () => {
           }),
           subaccounts: expect.arrayContaining([
             expect.objectContaining({
+              id: expect.any(String),
               name: expect.any(String),
               currency: expect.any(String),
               balance: expect.any(String),
@@ -119,6 +120,7 @@ describe(`user API`, () => {
       }),
       subaccounts: expect.arrayContaining([
         expect.objectContaining({
+          id: expect.any(String),
           name: expect.any(String),
           currency: expect.any(String),
           balance: expect.any(String),
