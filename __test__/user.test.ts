@@ -1,4 +1,4 @@
-import { sdk, testUserId, testAccountId, connectTestAccount } from './env';
+import { sdk, testUserId, testAccountId, connectTestAccount, testPlaidAccountId } from './env';
 
 describe(`user API`, () => {
   beforeAll(async () => {
@@ -131,5 +131,84 @@ describe(`user API`, () => {
         })
       ]),
     }));
+  });
+
+  it(`should return account identity by userId and accountId`, async () => {
+    const identity = await sdk.users.getAccountIdentity({
+      userId: testUserId,
+      accountId: testPlaidAccountId,
+    });
+
+    expect(identity).toEqual(
+      expect.objectContaining({
+        accounts: expect.arrayContaining([
+          expect.objectContaining({
+            account_id: expect.any(String),
+            mask: expect.any(String),
+            name: expect.any(String),
+            official_name: expect.any(String),
+            owners: expect.arrayContaining([
+              expect.objectContaining({
+                addresses: expect.arrayContaining([
+                  expect.objectContaining({
+                    data: expect.objectContaining({
+                      city: expect.any(String),
+                      country: expect.any(String),
+                      postal_code: expect.any(String),
+                      region: expect.any(String),
+                      street: expect.any(String),
+                    }),
+                    primary: expect.any(Boolean),
+                  }),
+                ]),
+                emails: expect.arrayContaining([
+                  expect.objectContaining({
+                    data: expect.any(String),
+                    primary: expect.any(Boolean),
+                    type: expect.any(String),
+                  }),
+                ]),
+                names: expect.arrayContaining([expect.any(String)]),
+                phone_numbers: expect.arrayContaining([
+                  expect.objectContaining({
+                    data: expect.any(String),
+                    primary: expect.any(Boolean),
+                    type: expect.any(String),
+                  }),
+                ]),
+              }),
+            ]),
+            subtype: expect.any(String),
+            type: expect.any(String),
+            plaid_account_id: expect.any(String),
+            subaccount_id: expect.any(String),
+          }),
+        ]),
+      }),
+    );
+  });
+
+  it(`should return account holdings by userId and accountId`, async () => {
+    const holdings = await sdk.users.getAccountHoldings({
+      userId: testUserId,
+      accountId: testPlaidAccountId,
+    });
+
+    expect(holdings).toEqual(
+      expect.objectContaining({
+        accounts: expect.arrayContaining([
+          expect.objectContaining({
+            account_id: expect.any(String),
+            mask: expect.any(String),
+            name: expect.any(String),
+            official_name: expect.any(String),
+            subtype: expect.any(String),
+            type: expect.any(String),
+            plaid_account_id: expect.any(String),
+            subaccount_id: expect.any(String),
+          }),
+        ]),
+      }),
+    );
   });
 });
