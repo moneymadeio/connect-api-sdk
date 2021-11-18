@@ -109,6 +109,101 @@ moneymade.init(); // don't forget to run init method
 
           Method removes account from user. Returns void.
 
+
+      4. ###### Get account identity:
+     ```await moneymade.users.getAccountIdentity({ userId: '', accountId: '' })```
+          Method returns identity object:
+          
+          ```
+          {
+            "accounts": [
+              {
+                "account_id": "uuid",
+                "balances": {
+                  "available": null,
+                  "current": 56302.06,
+                  "iso_currency_code": "USD",
+                  "limit": null,
+                  "unofficial_currency_code": null
+                },
+                "mask": "8888",
+                "name": "Plaid Mortgage",
+                "official_name": null,
+                "owners": [
+                  {
+                    "addresses": [
+                      {
+                        "data": {
+                          "city": "Malakoff",
+                          "country": "US",
+                          "postal_code": "14236",
+                          "region": "NY",
+                          "street": "2992 Cameron Road"
+                        },
+                        "primary": true
+                      }
+                    ],
+                    "emails": [
+                      {
+                        "data": "accountholder0@example.com",
+                        "primary": true,
+                        "type": "primary"
+                      }
+                    ],
+                    "names": [
+                      "Alberta Bobbeth Charleson"
+                    ],
+                    "phone_numbers": [
+                      {
+                        "data": "1112223333",
+                        "primary": false,
+                        "type": "home"
+                      }
+                    ]
+                  }
+                ],
+                "subtype": "mortgage",
+                "type": "loan",
+                "plaid_account_id": "",
+                "subaccount_id": "uuid"
+              }
+            ],
+            "item": {
+              "available_products": [
+                "assets",
+                "auth",
+                "balance",
+                "credit_details",
+                "income",
+                "investments",
+                "liabilities"
+              ],
+              "billed_products": [
+                "identity",
+                "transactions"
+              ],
+              "consent_expiration_time": null,
+              "error": null,
+              "institution_id": "ins_109511",
+              "item_id": "LLqyrV5eMGTgv6B1qKAkiXzQjBa1g9iPBr38m",
+              "products": [
+                "assets",
+                "identity",
+                "transactions"
+              ],
+              "update_type": "background",
+              "webhook": ""
+            },
+            "provider": {
+              "id": 24,
+              "name": "Tartan Bank",
+              "slug": "tartan-bank",
+              "strategy": "plaid",
+              "logo": ""
+            }
+          }
+          ```
+
   2. ##### Providers API:
       1. ###### Get providers list:
 
