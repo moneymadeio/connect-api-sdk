@@ -111,7 +111,7 @@ moneymade.init(); // don't forget to run init method
 
 
       4. ###### Get account identity:
-     ```await moneymade.users.getAccountIdentity({ userId: '', accountId: '' })```
+          ```await moneymade.users.getAccountIdentity({ userId: '', accountId: '' })```
           Method returns identity object:
           
           ```
@@ -194,6 +194,102 @@ moneymade.init(); // don't forget to run init method
               "update_type": "background",
               "webhook": ""
             },
+            "provider": {
+              "id": 24,
+              "name": "Tartan Bank",
+              "slug": "tartan-bank",
+              "strategy": "plaid",
+              "logo": ""
+            }
+          }
+          ```
+
+      4. ###### Get account holdings:
+          ```await moneymade.users.getAccountHoldings({ userId: '', accountId: '' })```
+          Method returns holdings object:
+          
+          ```
+          {
+            "accounts": [
+              {
+                "account_id": "e157a8cf-2a5a-40fa-b58b-67ee10f8522a",
+                "balances": {
+                  "available": 100,
+                  "current": 110,
+                  "iso_currency_code": "USD",
+                  "limit": null,
+                  "unofficial_currency_code": null
+                },
+                "mask": "0000",
+                "name": "Plaid Checking",
+                "official_name": "Plaid Gold Standard 0% Interest Checking",
+                "subtype": "checking",
+                "type": "depository",
+                "plaid_account_id": "K1l9Kn57RwtkGozMLqdDtp3Z8NoWW1tVn5Pqm",
+                "subaccount_id": "25eb10c4-dc93-40c7-8af7-d8d723617c58"
+              }
+            ],
+            "holdings": [
+              {
+                "account_id": "e157a8cf-2a5a-40fa-b58b-67ee10f8522a",
+                "cost_basis": 1,
+                "institution_price": 1,
+                "institution_price_as_of": null,
+                "institution_value": 0.01,
+                "iso_currency_code": "USD",
+                "quantity": 0.01,
+                "security_id": "d6ePmbPxgWCWmMVv66q9iPV94n91vMtov5Are",
+                "unofficial_currency_code": null,
+                "plaid_account_id": "xAQwGr78xLTqA7Jevzg4iLB43GdQQwunNQojL",
+                "subaccount_id": "8102b8bd-c6ba-488f-a633-f68aaace70bb"
+              }
+            ],
+            "item": {
+              "available_products": [
+                "assets",
+                "auth",
+                "balance",
+                "credit_details",
+                "income",
+                "liabilities"
+              ],
+              "billed_products": [
+                "identity",
+                "investments",
+                "transactions"
+              ],
+              "consent_expiration_time": null,
+              "error": null,
+              "institution_id": "ins_109511",
+              "item_id": "LLqyrV5eMGTgv6B1qKAkiXzQjBa1g9iPBr38m",
+              "products": [
+                "assets",
+                "identity",
+                "investments",
+                "transactions"
+              ],
+              "update_type": "background",
+              "webhook": ""
+            },
+            "securities": [
+              {
+                "close_price": 28.17,
+                "close_price_as_of": "2021-11-17",
+                "cusip": "00769G543",
+                "institution_id": null,
+                "institution_security_id": null,
+                "is_cash_equivalent": false,
+                "isin": "US00769G5430",
+                "iso_currency_code": "USD",
+                "name": "Cambiar International Equity Instl",
+                "proxy_security_id": null,
+                "security_id": "3AVe95eyPjHRlGaLdknRsEZ3GM3gq4TGzeM9l",
+                "sedol": "B97GLL1",
+                "ticker_symbol": "CAMYX",
+                "type": "mutual fund",
+                "unofficial_currency_code": null
+              }
+            ],
             "provider": {
               "id": 24,
               "name": "Tartan Bank",
