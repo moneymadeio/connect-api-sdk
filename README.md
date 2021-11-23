@@ -368,3 +368,26 @@ moneymade.init(); // don't forget to run init method
           }
           ```
 
+    4. ##### Transactions API:
+          ``` await sdk.transactions.getList({ userId, accountId })```
+
+          Method returns transactions list:
+
+          ```
+          {
+            pagination: { limit: 25, offset: 0 },
+            data: [
+              {
+                account_id: '1fb52338-6088-43fa-99fe-f51126c7eee1',
+                amount: 88.28,
+                iso_currency_code: 'USD',
+                categories: [],
+                status: 'finished',
+                transaction_type: 'deposit',
+                subaccount_id: '7491c7ee-efdf-4adc-8e22-6de0d259f9b2',
+                issued_at: '2021-11-23T16:42:32.316Z',
+                transaction_id: '37343931633765652d656664662d346164632d386532322d36646530643235396639623230'
+              }
+            ]
+          }
+          ```
