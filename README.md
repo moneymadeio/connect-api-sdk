@@ -5,6 +5,7 @@ Moneymade Connect API official nodejs SDK
 - [Navigation](#navigation)
 - [Installation](#installation)
 - [Get started](#get-started)
+- [Pagination](#pagination)
 - [User API](#user-api)
   - [User object](#user-object)
   - [User creation](#user-creation)
@@ -15,7 +16,16 @@ Moneymade Connect API official nodejs SDK
   - [User account removing](#user-account-removing)
   - [Account identity retrieving](#account-identity-retrieving)
   - [Account holdings retrieving](#account-holdings-retrieving)
-
+- [Provider API](#provider-api)
+  - [Provider object](#provider-object)
+  - [Providers retrieving](#providers-retrieving)
+  - [Provider retrieving by slug](#provider-retrieving-by-slug)
+- [Currencies API](#currencies-api)
+  - [Currency object](#currency-object)
+  - [Currency retrieving](#currency-retrieving)
+- [Transactions API](#transactions-api)
+  - [Transaction Object](#transaction-object)
+  - [Transaction retrieving](transaction-retrieving)
 
 ## Installation
 
@@ -51,11 +61,28 @@ SDK starts asynchronously, run init method to allow usage:
   await sdk.init();
 ```
 
+
+## Pagination
+
+Some methods return paginated data: object contains data as array of retrieved entities and pagination info.
+
+```json
+{
+  "pagination": {
+    "offset": 0, // offset for entities to be skipped
+    "limit": 200 // limit per request to be retrieved
+  },
+  "data": [] // array with data
+}
+```
+
+Those method applies pagintation parameters as arguments to move page backward/forward. 
+
 ## User API
 User API allows to manipulate with accounts data.
 User is a container to put connected accounts and connect it via your internal user.
 
-### User object
+#### User object
 User object contains data describes the user and connected accounts:
 
 ```json
@@ -76,7 +103,7 @@ User object contains data describes the user and connected accounts:
 }
 ```
 
-## User creation
+#### User creation
 
 Creating a new user requires token and account id recieved on frontend side after connection an account via connect widget.
 
@@ -87,7 +114,7 @@ await moneymade.users.create({token: '', account_id: ''});
 
 This method returns newly created [user object](#user-object) with first account. 
 
-## User retrieving
+#### User retrieving
 
 You should use user id from [user object](#user-object) to retrive previously create user you .
 
@@ -97,7 +124,7 @@ await moneymade.users.getOne('userId');
 
 Method returns [user object](#user-object) with stored accounts.
 
-## Connecting account to user
+#### Connecting account to user
 
 You need following parameters to connect account with existing user :
 - token - temporary token you recive after connection by connect widget
@@ -117,7 +144,7 @@ await sdk.users.addAccount(
 
 Method returns [user object](#user-object) with newly added account.
 
-## Account object
+#### Account object
 
 User contains accounts object. This object isn't populated via full account data (subaccount info).
 Full [account object](#account-object) contains following data:
@@ -146,7 +173,7 @@ Full [account object](#account-object) contains following data:
  }
 ```
 
-## User account retrieving
+#### User account retrieving
 
 [Account object](#account-object) is fetched by following method:
 
@@ -158,7 +185,7 @@ await sdk.users.getAccount({
 
 ```
 
-## User account removing
+#### User account removing
 
 Use `removeAccount` to remove account from user:
 
@@ -169,7 +196,7 @@ await sdk.users.removeAccount({
 });
 ```
 
-## Account identity retrieving
+#### Account identity retrieving
 
 Currently, it works only with plaid based accounts.
 Check [plaid docs](https://plaid.com/docs/api/products/#identityget) for more info.
@@ -273,7 +300,7 @@ Method returns identity object with subaccount links:
 }
 ```
 
-## Account holdings retrieving
+#### Account holdings retrieving
 
 Currently, it works only with plaid based accounts.
 Check [plaid docs](https://plaid.com/docs/api/products/#identityget) for more info.
@@ -379,3 +406,101 @@ Method returns holdings object with subaccount links:
 }
 ```
 
+## Provider API
+#### Provider object
+
+Provider object describes invest or finance institution.
+Object contains following data:
+
+```json
+{
+  "id": 1,
+  "name": "Coinbase",
+  "slug": "coinbase",
+  "strategy": "oauth", 
+  "connector": "coinbase",
+  "description": "Buy and sell cryptocurrency. Coinbase is the easiest place to buy, sell, and manage your cryptocurrency portfolio.",
+  "website": "https://www.coinbase.com",
+  "tags": [],
+  "logo": "https://firebasestorage.googleapis.com/v0/b/benchmark-media.appspot.com/o/logos%2F1598311540327_Screen%20Shot%202020-08-24%20at%204.25.31%20PM.png?alt=media"
+  }
+```
+
+#### Providers retrieving
+
+Use following method to fetch providers.
+
+```typescript
+  await moneymade.providers.getList()
+```
+  
+Method returns array with [provider objects](#provider-object).
+NOTE: Pagination will be added soon. (in Dec 5 2021).
+
+#### Provider retrieving by slug
+
+Use following method to fetch provider by slug.
+
+```typescript
+await moneymade.providers.getOne('coinbase');
+```
+Method returns [provider object](#provider-object).
+
+## Currencies API
+#### Currency object
+
+Currency object describe currency and contains following data:
+
+```json
+{
+  "currency": "ETH", // currency ticker
+  "name": "Ethereum", // readable name 
+  "type": "cryptocurrency", // currency type, equals to "fiat" for fiat currencies
+  "logo": null // logo url, nullable
+}
+```
+
+
+#### Currency retrieving
+
+```typescript
+await moneymade.currencies.getList();
+```
+
+Method returns array with [currency objects](#currency-object)
+
+## Transactions API
+
+#### Transaction Object
+
+Transaction describes changing balance in subaccount and contains following data:
+
+```json
+{
+  "id": "cd68c98c-6853-47e6-a48a-cc2c4362d971", // transaction id
+  "subaccount_id": "edcddedb-f33f-42d4-a3d8-c38a58004b8a", // moneymade open api subaccount id 
+  "transaction_id": "LS2BVV-LF7ZA-5HSTUK", // native transaction id
+  "account_id": "c4312961-dbd9-4ff9-af43-926dc93b2cb7", // moneymade open api account id
+  "amount": "2.76", // transaction amount
+  "iso_currency_code": "EUR", // amount currency
+  "categories": [], // array with categories
+  "issued_at": "2021-08-24 06:04:01.336+00",
+  "transaction_type": "sell", 
+  "status": "completed",
+  "created_at": "2021-11-29 11:42:36.814217+00",
+  "updated_at": "2021-11-29 11:42:36.814217+00"
+}
+```
+
+#### Transaction retrieving
+
+Transaction data is returned as pages. Look at [pagination]() for more info. 
+
+```typescript
+await sdk.transactions.getList({
+  userId: 'some-user-id',
+  accountId: 'some-account-id',
+});
+```
+
+Method returns paginated response with [transaction objects](#transaction-object)
