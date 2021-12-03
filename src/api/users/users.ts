@@ -15,7 +15,10 @@ export class Users extends API {
     return this.request({ url: userId });
   }
 
-  async addAccount(user: Users.User, account: Users.CreateUserPayload): Promise<Users.Account> {
+  async addAccount(
+    user: Pick<Users.User, 'id'> | Users.User,
+    account: Users.CreateUserPayload,
+  ): Promise<Users.Account> {
     return this.request({
       url: `${user.id}/accounts`,
       method: 'POST',

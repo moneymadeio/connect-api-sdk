@@ -47,7 +47,7 @@ describe(`user API`, () => {
     describe('should',  () => {
       it('return account',  async () => {
         const account = await sdk.users.addAccount(
-          { id: testUserId, accounts: [] },
+          { id: testUserId },
           { account_id: accountId, token: 'temporary empty' },
         );
 
