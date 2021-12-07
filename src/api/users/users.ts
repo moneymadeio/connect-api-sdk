@@ -4,6 +4,11 @@ import { Providers } from '../providers';
 export class Users extends API {
   entityUrl = 'users';
 
+  checkIds(userId: string, clientUserId: string){
+    if(!userId && !clientUserId)
+      throw new Error('userId or clientUserId is required');
+  }
+  
   async create(account: Users.CreateUserPayload): Promise<Users.User> {
     return this.request({
       method: 'POST',
@@ -11,38 +16,50 @@ export class Users extends API {
     });
   }
 
-  async getOne(userId: string): Promise<Users.User> {
-    return this.request({ url: userId });
+  async getOne(userId?: string, clientUserId?: string): Promise<Users.User> {
+    this.checkIds(userId, clientUserId);
+
+    return this.request({ url: clientUserId ? clientUserId : userId });
   }
 
   async addAccount(
-    user: Pick<Users.User, 'id'> | Users.User,
+    user: Pick<Users.User, 'id' | 'clientUserId'> | Users.User,
     account: Users.CreateUserPayload,
   ): Promise<Users.Account> {
+    this.checkIds(user.id, user.clientUserId);
+
     return this.request({
-      url: `${user.id}/accounts`,
+      url: `${user?.clientUserId || user?.id}/accounts`,
       method: 'POST',
       data: account,
     });
   }
   
-  async removeAccount({ userId, accountId }: Users.AccountQuery): Promise<void> {
+  async removeAccount({ userId, accountId, clientUserId }: Users.AccountQuery): Promise<void> {
+    this.checkIds(userId, clientUserId);
+
     return this.request({
-      url: `${userId}/accounts/${accountId}`,
+      url: `${clientUserId ? clientUserId : userId}/accounts/${accountId}`,
       method: 'DELETE',
     });
   }
 
-  async getAccountIdentity({ userId, accountId }: Users.AccountQuery): Promise<Users.Identity> {
-    return this.request({ url: `${userId}/accounts/${accountId}/identity` });
+  async getAccountIdentity({ userId, accountId, clientUserId }: Users.AccountQuery): Promise<Users.Identity> {
+    this.checkIds(userId, clientUserId);
+
+    return this.request({ url: `${clientUserId ? clientUserId : userId}/accounts/${accountId}/identity` });
   }
 
-  async getAccountHoldings({ userId, accountId }: Users.AccountQuery): Promise<Users.Holdings> {
-    return this.request({ url: `${userId}/accounts/${accountId}/investments/holdings` });
+  async getAccountHoldings({ userId, accountId, clientUserId }: Users.AccountQuery): Promise<Users.Holdings> {
+    this.checkIds(userId, clientUserId);
+
+    return this.request({ url: `${clientUserId ? clientUserId : userId}/accounts/${accountId}/investments/holdings` });
   }
 
-  async getAccount({ userId, accountId }: Users.AccountQuery): Promise<Users.Account> {
-    return this.request({ url: `${userId}/accounts/${accountId}` });
+  async getAccount({ userId, accountId, clientUserId }: Users.AccountQuery): Promise<Users.Account> {
+    this.checkIds(userId, clientUserId);
+
+    return this.request({ url: `${clientUserId ? clientUserId : userId}/accounts/${accountId}` });
   }
 }
 
@@ -50,6 +67,7 @@ export namespace Users {
   export interface CreateUserPayload {
     account_id: string;
     token: string;
+    client_user_id?: string;
   }
 
   export interface Subaccount {
@@ -71,11 +89,13 @@ export namespace Users {
 
   export interface User {
     id: string;
+    clientUserId?: string;
     accounts: { id: string; provider: Providers.Provider }[];
   }
 
   export interface AccountQuery {
     userId: string;
+    clientUserId?: string;
     accountId: string;
   }
 

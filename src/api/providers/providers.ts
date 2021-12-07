@@ -3,8 +3,13 @@ import { API } from '../../core/api-entity';
 export class Providers extends API {
   entityUrl = 'providers';
 
-  async getList(): Promise<Providers.ProvidersResponse> {
-    return this.request({});
+  async getList(queryParams?: Providers.GetProvidersRequest): Promise<Providers.ProvidersResponse> {   
+    const params = {
+      limit: queryParams?.limit || 25,
+      offset: queryParams?.offset || 0,
+    };
+
+    return this.request({ params });
   }
 
   async getOne(slug: string): Promise<Providers.Provider> {
@@ -19,6 +24,8 @@ export namespace Providers {
     WalletConnect = 'walletconnect',
     Address = 'address',
   }
+
+  export type GetProvidersRequest = API.PaginatedRequest;
 
   export type ProvidersResponse = API.PageResponse<Provider>;
 
