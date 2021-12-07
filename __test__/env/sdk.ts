@@ -1,6 +1,7 @@
 import { MoneymadeSDK } from '../../src/sdk';
 
 export const testUserId = process.env.TEST_USER_ID;
+export const testUserClientId = process.env.TEST_CLIENT_USER_ID;
 export const testAccountId = process.env.TEST_ACCOUNT_ID;
 export const testPlaidAccountId = process.env.TEST_PLAID_ACCOUNT_ID;
 
