@@ -20,6 +20,7 @@ describe(`user API`, () => {
 
         expect(user).toEqual({
           id: expect.any(String),
+          client_user_id: null,
           accounts: expect.arrayContaining([
             expect.objectContaining({
               id: expect.any(String),
