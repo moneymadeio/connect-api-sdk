@@ -1,4 +1,4 @@
-import { sdk, testUserId, testAccountId, connectTestAccount, testPlaidAccountId } from './env';
+import { sdk, testUserId, testUserClientId, testAccountId, connectTestAccount, testPlaidAccountId } from './env';
 
 describe(`user API`, () => {
   beforeAll(async () => {
@@ -20,6 +20,7 @@ describe(`user API`, () => {
 
         expect(user).toEqual({
           id: expect.any(String),
+          client_user_id: null,
           accounts: expect.arrayContaining([
             expect.objectContaining({
               id: expect.any(String),
@@ -85,6 +86,26 @@ describe(`user API`, () => {
 
   it(`should return user by id`, async () => {
     const data = await sdk.users.getOne(testUserId);
+
+    expect(data).toEqual(expect.objectContaining({
+      id: expect.any(String),
+      accounts: expect.arrayContaining([
+        expect.objectContaining({
+          id: expect.any(String),
+          provider: expect.objectContaining({
+            id: expect.any(Number),
+            name: expect.any(String),
+            slug: expect.any(String),
+            strategy: expect.any(String),
+            logo: expect.any(String),
+          }),
+        })
+      ]),
+    }));
+  });
+  
+  it(`should return user by clientUserId`, async () => {
+    const data = await sdk.users.getOne(null,testUserClientId);  
 
     expect(data).toEqual(expect.objectContaining({
       id: expect.any(String),
