@@ -44,6 +44,10 @@ export class MoneymadeSDK {
       (request) => {
         const timestamp = Date.now();
 
+        if(request.url.endsWith('users') || request.url.endsWith('sessions')) {
+          request.baseURL = request.baseURL.replace('v1', 'v2');
+        }
+
         request.headers['x-mm-api-key'] = this.config.apiKey;
         request.headers['x-mm-request-timestamp'] = timestamp;
         request.headers['x-mm-request-signature'] = makeSign({
@@ -52,7 +56,7 @@ export class MoneymadeSDK {
           requestUrl: `${request.baseURL}/${request.url}`,
           body: request.data ? request.data : '',
         });
-
+        
         return request;
       },
     );
