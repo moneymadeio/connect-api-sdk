@@ -1,4 +1,4 @@
-import { sdk, testUserId, testUserClientId, testAccountId, connectTestAccount, testPlaidAccountId } from './env';
+import { sdk, testUserId, testUserClientId, testAccountId, connectTestAccount, testPlaidAccountId, testEmail } from './env';
 
 describe(`user API`, () => {
   beforeAll(async () => {
@@ -6,36 +6,28 @@ describe(`user API`, () => {
   });
 
   describe('create user', () => {
-    let accountId;
-
-    beforeAll(async () => {
-      accountId = await connectTestAccount();
-    });
-
     describe('should',  () => {
       it('return new user',  async () => {
         const user = await sdk.users.create(
-          { account_id: accountId, token: 'temporary empty' },
+          { email: testEmail, client_user_id: testUserClientId },
         );
 
         expect(user).toEqual({
           id: expect.any(String),
-          client_user_id: null,
-          accounts: expect.arrayContaining([
-            expect.objectContaining({
-              id: expect.any(String),
-              provider: expect.objectContaining({
-                id: expect.any(Number),
-                name: expect.any(String),
-                slug: expect.any(String),
-                strategy: expect.any(String),
-                logo: expect.any(String),
-              }),
-            })
-          ]),
+          client_user_id: expect.any(String),
+          accounts: [],
         });
       });
     });
+  });
+
+  it(`should return user access token`, async () => {
+    const data = await sdk.users.createSession(testUserId);
+    
+    expect(data).toEqual(expect.objectContaining({
+      token: expect.any(String),
+      expires_at: expect.any(String),
+    }));
   });
 
   describe('add/remove account to existing user', () => {
@@ -49,7 +41,7 @@ describe(`user API`, () => {
       it('return account',  async () => {
         const account = await sdk.users.addAccount(
           { id: testUserId },
-          { account_id: accountId, token: 'temporary empty' },
+          { email: testEmail, client_user_id: testUserClientId },
         );
 
         expect(account).toEqual({

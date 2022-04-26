@@ -13,7 +13,14 @@ export class Users extends API {
     return this.request({
       method: 'POST',
       data: account,
-    });
+    })
+  }
+  
+  async createSession(userId: string): Promise<Users.UserSession> {
+    return this.request({
+      url: `${userId}/sessions`,
+      method: 'POST',
+    })
   }
 
   async getOne(userId?: string, clientUserId?: string): Promise<Users.User> {
@@ -65,9 +72,8 @@ export class Users extends API {
 
 export namespace Users {
   export interface CreateUserPayload {
-    account_id: string;
-    token: string;
-    client_user_id?: string;
+    email: string;
+    client_user_id: string;
   }
 
   export interface Subaccount {
@@ -85,6 +91,11 @@ export namespace Users {
     id: string;
     provider: Providers.Provider;
     subaccounts: Subaccount[];
+  }
+  
+  export interface UserSession {
+    token: string;
+    expires_at: string;
   }
 
   export interface User {
