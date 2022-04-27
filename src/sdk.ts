@@ -57,7 +57,7 @@ export class MoneymadeSDK {
           requestUrl: `${request.baseURL}/${request.url}`,
           body: request.data ? request.data : '',
         });
-
+        
         return request;
       },
     );
