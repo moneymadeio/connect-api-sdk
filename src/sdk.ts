@@ -8,7 +8,7 @@ export const PROJECT_API_URL = DEVELOPMENT_URL || 'https://project-api-dot-money
 
 export class MoneymadeSDK {
   private axios: AxiosInstance;
-
+  
   currencies: api.Currencies;
   users: api.Users;
   providers: api.Providers;
