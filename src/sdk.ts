@@ -1,7 +1,7 @@
-import Axios, { AxiosInstance } from "axios";
+import Axios, { AxiosInstance } from 'axios';
 
-import * as api from "./api";
-import { makeSign } from "./core/signature";
+import * as api from './api';
+import { makeSign } from './core/signature';
 
 const { DEVELOPMENT_URL } = process.env;
 export const PROJECT_API_URL = DEVELOPMENT_URL || 'https://project-api-dot-moneymade-connect.uc.r.appspot.com';
@@ -27,7 +27,7 @@ export class MoneymadeSDK {
     return {
       base_api_url: data.account_api_url,
       ws_api_url: data.ws_api_url,
-    };
+    }
   }
 
   async init(): Promise<MoneymadeSDK> {
