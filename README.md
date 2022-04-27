@@ -9,6 +9,7 @@ Moneymade Connect API official nodejs SDK
 - [User API](#user-api)
   - [User object](#user-object)
   - [User creation](#user-creation)
+  - [User token creation](#user-token-creation)
   - [User retrieving](#user-retrieving)
   - [Connecting account](#connecting-account-to-user)
   - [Account object](#account-object)
@@ -25,7 +26,10 @@ Moneymade Connect API official nodejs SDK
   - [Currency retrieving](#currency-retrieving)
 - [Transactions API](#transactions-api)
   - [Transaction Object](#transaction-object)
-  - [Transaction retrieving](transaction-retrieving)
+  - [Transaction retrieving](#transaction-retrieving)
+- [Accounts API](#accounts-api)
+  - [Account bank details Object](#account-bank-details-object)
+  - [Accounts bank details](#accounts-bank-details)
 
 ## Installation
 
@@ -109,10 +113,19 @@ Creating a new user requires token and account id recieved on frontend side afte
 
 
 ```typescript
-await moneymade.users.create({token: '', account_id: ''});
+await moneymade.users.create({client_user_id: ''});
 ```
 
 This method returns newly created [user object](#user-object) with first account. 
+
+#### User token creation
+
+Creating a new token for user.
+
+
+```typescript
+await moneymade.users.createSession('userId');
+```
 
 #### User retrieving
 
@@ -504,3 +517,30 @@ await sdk.transactions.getList({
 ```
 
 Method returns paginated response with [transaction objects](#transaction-object)
+
+## Accounts API
+
+#### Account bank details Object
+
+Accounts bank details object:
+
+```json
+{
+  "accountNumber": "12321312",
+  "holderName": "Holders name",
+  "routingNumber": "24124124",
+  "type": "bank",
+  "balance": 0,
+  "source": "plaid"
+}
+```
+
+#### Accounts bank details
+
+Get account's bank details
+
+```typescript
+await sdk.accounts.getBankDetails('some-account-id');
+```
+
+Method returns paginated response with [Account bank detail Object](#account-bank-details-object)
