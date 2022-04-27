@@ -1,7 +1,7 @@
 import { API } from "../../core/api-entity";
 
 export class Accounts extends API {
-  entityUrl = "providers";
+  entityUrl = "accounts";
 
   async getBankDetails(accountId: string): Promise<Accounts.BankDetails[]> {
     return this.request({
