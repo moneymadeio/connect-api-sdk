@@ -13,6 +13,7 @@ export class MoneymadeSDK {
   users: api.Users;
   providers: api.Providers;
   transactions: api.Transactions;
+  accounts: api.Accounts;
 
   constructor(private config: MoneymadeSDK.Config) {}
 
@@ -65,6 +66,7 @@ export class MoneymadeSDK {
     this.users = new api.Users(this.axios);
     this.providers = new api.Providers(this.axios);
     this.transactions = new api.Transactions(this.axios);
+    this.accounts = new api.Accounts(this.axios);
 
     return this;
   }
