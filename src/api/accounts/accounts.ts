@@ -1,12 +1,12 @@
-import { API } from "../../core/api-entity";
+import { API } from '../../core/api-entity';
 
 export class Accounts extends API {
-  entityUrl = "accounts";
+  entityUrl = 'accounts';
 
   async getBankDetails(accountId: string): Promise<Accounts.BankDetails[]> {
     return this.request({
       url: `${accountId}/bank-details`,
-      method: "GET",
+      method: 'GET',
     });
   }
 }
