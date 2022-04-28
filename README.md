@@ -140,22 +140,29 @@ Method returns [user object](#user-object) with stored accounts.
 #### Connecting account to user
 
 You need following parameters to connect account with existing user :
-- token - temporary token you recive after connection by connect widget
 - id - user id to connect with new account
-- accountId - new account id you recive after connection by connect widget
+- client_key - client key for project
+- provider_id - provider id you want to connect
+- apiKey - provider api key
+- apiSecret - provider api secret
+- memo - Memo for api key(optional, till provider requires -example Bitmart needs memo)
 
 
 ```typescript
 await sdk.users.addAccount(
     { id: 'some-user-id' },
     {
-      account_id: 'new-account-id',
-      token: 'token-value-here',
+      client_key: 'clientKey',
+      provider_id: 'providerId',
     },
+     {
+      apiKey: 'providerApiKey',
+      apiSecret: 'providerApiSecret,
+    }
   );
 ```
 
-Method returns [user object](#user-object) with newly added account.
+Method returns token.
 
 #### Account object
 
