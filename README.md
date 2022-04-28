@@ -11,12 +11,12 @@ Moneymade Connect API official nodejs SDK
   - [User creation](#user-creation)
   - [User token creation](#user-token-creation)
   - [User retrieving](#user-retrieving)
+  - [Connecting account](#connecting-account-to-user)
   - [Account object](#account-object)
   - [User account retrieving](#user-account-retrieving)
   - [User account removing](#user-account-removing)
-- [Accounts API](#accounts-api)
-  - [Account bank details object](#account-bank-details-object)
-  - [Accounts bank details](#accounts-bank-details)
+  - [Account identity retrieving](#account-identity-retrieving)
+  - [Account holdings retrieving](#account-holdings-retrieving)
 - [Provider API](#provider-api)
   - [Provider object](#provider-object)
   - [Providers retrieving](#providers-retrieving)
@@ -27,6 +27,9 @@ Moneymade Connect API official nodejs SDK
 - [Transactions API](#transactions-api)
   - [Transaction Object](#transaction-object)
   - [Transaction retrieving](#transaction-retrieving)
+- [Accounts API](#accounts-api)
+  - [Account bank details Object](#account-bank-details-object)
+  - [Accounts bank details](#accounts-bank-details)
 
 ## Installation
 
@@ -106,35 +109,53 @@ User object contains data describes the user and connected accounts:
 
 #### User creation
 
-Creating a new user requires client_user_id (it might be your internal user id) and optional email.
+Creating a new user requires token and account id recieved on frontend side after connection an account via connect widget.
 
 
 ```typescript
-await moneymade.users.create({ client_user_id: 'you-internal-user-id' });
+await moneymade.users.create({client_user_id: ''});
 ```
 
-This method returns newly created [user object](#user-object). 
+This method returns newly created [user object](#user-object) with first account. 
 
 #### User token creation
 
-Creating a new token for user. This token is used by widget only.
+Creating a new token for user.
 
 
 ```typescript
-// you can use userId from User Object or your internal user id
-// (if internal user id was used as client_user_id on user creation)
-await moneymade.users.createSession('userId'); 
+await moneymade.users.createSession('userId');
 ```
 
 #### User retrieving
 
-You should use user id from [user object](#user-object) to retrive previously created user.
+You should use user id from [user object](#user-object) to retrive previously create user you .
 
 ```typescript
 await moneymade.users.getOne('userId');
 ```
 
 Method returns [user object](#user-object) with stored accounts.
+
+#### Connecting account to user
+
+You need following parameters to connect account with existing user :
+- token - temporary token you recive after connection by connect widget
+- id - user id to connect with new account
+- accountId - new account id you recive after connection by connect widget
+
+
+```typescript
+await sdk.users.addAccount(
+    { id: 'some-user-id' },
+    {
+      account_id: 'new-account-id',
+      token: 'token-value-here',
+    },
+  );
+```
+
+Method returns [user object](#user-object) with newly added account.
 
 #### Account object
 
@@ -188,32 +209,215 @@ await sdk.users.removeAccount({
 });
 ```
 
-## Accounts API
+#### Account identity retrieving
 
-#### Account bank details object
+Currently, it works only with plaid based accounts.
+Check [plaid docs](https://plaid.com/docs/api/products/#identityget) for more info.
 
-Accounts bank details object:
+```typescript
+  await moneymade.users.getAccountIdentity({
+    userId: 'some-user-id',
+    accountId: 'some-account-id',
+  }
+```
+
+Method returns identity object with subaccount links:
 
 ```json
 {
-  "accountNumber": "000123456789",
-  "holderName": "Holders name",
-  "routingNumber": "110000000",
-  "type": "bank",
-  "balance": 0,
-  "source": "plaid"
+  "provider": { // provider info
+    "id": 24,
+    "name": "Tartan Bank",
+    "slug": "tartan-bank",
+    "strategy": "plaid",
+    "logo": ""
+  },
+  "accounts": [
+    {
+      "account_id": "uuid",
+      "balances": {
+        "available": null,
+        "current": 56302.06,
+        "iso_currency_code": "USD",
+        "limit": null,
+        "unofficial_currency_code": null
+      },
+      "plaid_account_id": "uuid", // plaid native account id
+      "subaccount_id": "uuid", //moneymade open-api subaccount id
+      "mask": "8888",
+      "name": "Plaid Mortgage",
+      "official_name": null,
+      "owners": [
+        {
+          "addresses": [
+            {
+              "data": {
+                "city": "Malakoff",
+                "country": "US",
+                "postal_code": "14236",
+                "region": "NY",
+                "street": "2992 Cameron Road"
+              },
+              "primary": true
+            }
+          ],
+          "emails": [
+            {
+              "data": "accountholder0@example.com",
+              "primary": true,
+              "type": "primary"
+            }
+          ],
+          "names": [
+            "Alberta Bobbeth Charleson"
+          ],
+          "phone_numbers": [
+            {
+              "data": "1112223333",
+              "primary": false,
+              "type": "home"
+            }
+          ]
+        }
+      ],
+      "subtype": "mortgage",
+      "type": "loan"
+    }
+  ],
+  "item": {
+    "available_products": [
+      "assets",
+      "auth",
+      "balance",
+      "credit_details",
+      "income",
+      "investments",
+      "liabilities"
+    ],
+    "billed_products": [
+      "identity",
+      "transactions"
+    ],
+    "consent_expiration_time": null,
+    "error": null,
+    "institution_id": "ins_109511",
+    "item_id": "LLqyrV5eMGTgv6B1qKAkiXzQjBa1g9iPBr38m",
+    "products": [
+      "assets",
+      "identity",
+      "transactions"
+    ],
+    "update_type": "background",
+    "webhook": ""
+  }
 }
 ```
 
-#### Accounts bank details
+#### Account holdings retrieving
 
-Get account's bank details
+Currently, it works only with plaid based accounts.
+Check [plaid docs](https://plaid.com/docs/api/products/#identityget) for more info.
 
 ```typescript
-await sdk.accounts.getBankDetails('some-account-id');
+await moneymade.users.getAccountHoldings({
+  userId: 'some-user-id',
+  accountId: 'some-account-id',
+});
 ```
 
-Method returns paginated response with [Account bank detail Object](#account-bank-details-object)
+Method returns holdings object with subaccount links:
+
+```json
+{
+   "provider": { // provider info
+    "id": 24,
+    "name": "Tartan Bank",
+    "slug": "tartan-bank",
+    "strategy": "plaid",
+    "logo": ""
+  }
+  "accounts": [
+    {
+      "account_id": "e157a8cf-2a5a-40fa-b58b-67ee10f8522a", // moneymade open api account id
+      "plaid_account_id": "K1l9Kn57RwtkGozMLqdDtp3Z8NoWW1tVn5Pqm", // plaid native account id
+      "subaccount_id": "25eb10c4-dc93-40c7-8af7-d8d723617c58", // moneymade open api account id
+      "balances": {
+        "available": 100,
+        "current": 110,
+        "iso_currency_code": "USD",
+        "limit": null,
+        "unofficial_currency_code": null
+      },
+      "mask": "0000",
+      "name": "Plaid Checking",
+      "official_name": "Plaid Gold Standard 0% Interest Checking",
+      "subtype": "checking",
+      "type": "depository"
+    }
+  ],
+  "holdings": [
+    {
+      "account_id": "e157a8cf-2a5a-40fa-b58b-67ee10f8522a", // moneymade open api account id
+      "plaid_account_id": "xAQwGr78xLTqA7Jevzg4iLB43GdQQwunNQojL",  // plaid native account id
+      "subaccount_id": "8102b8bd-c6ba-488f-a633-f68aaace70bb" // moneymade open api account id
+      "cost_basis": 1,
+      "institution_price": 1,
+      "institution_price_as_of": null,
+      "institution_value": 0.01,
+      "iso_currency_code": "USD",
+      "quantity": 0.01,
+      "security_id": "d6ePmbPxgWCWmMVv66q9iPV94n91vMtov5Are",
+      "unofficial_currency_code": null
+    }
+  ],
+  "item": {
+    "available_products": [
+      "assets",
+      "auth",
+      "balance",
+      "credit_details",
+      "income",
+      "liabilities"
+    ],
+    "billed_products": [
+      "identity",
+      "investments",
+      "transactions"
+    ],
+    "consent_expiration_time": null,
+    "error": null,
+    "institution_id": "ins_109511",
+    "item_id": "LLqyrV5eMGTgv6B1qKAkiXzQjBa1g9iPBr38m",
+    "products": [
+      "assets",
+      "identity",
+      "investments",
+      "transactions"
+    ],
+    "update_type": "background",
+    "webhook": ""
+  },
+  "securities": [
+    {
+      "close_price": 28.17,
+      "close_price_as_of": "2021-11-17",
+      "cusip": "00769G543",
+      "institution_id": null,
+      "institution_security_id": null,
+      "is_cash_equivalent": false,
+      "isin": "US00769G5430",
+      "iso_currency_code": "USD",
+      "name": "Cambiar International Equity Instl",
+      "proxy_security_id": null,
+      "security_id": "3AVe95eyPjHRlGaLdknRsEZ3GM3gq4TGzeM9l",
+      "sedol": "B97GLL1",
+      "ticker_symbol": "CAMYX",
+      "type": "mutual fund",
+      "unofficial_currency_code": null
+    }
+  ]
+}
+```
 
 ## Provider API
 #### Provider object
@@ -313,3 +517,30 @@ await sdk.transactions.getList({
 ```
 
 Method returns paginated response with [transaction objects](#transaction-object)
+
+## Accounts API
+
+#### Account bank details Object
+
+Accounts bank details object:
+
+```json
+{
+  "accountNumber": "12321312",
+  "holderName": "Holders name",
+  "routingNumber": "24124124",
+  "type": "bank",
+  "balance": 0,
+  "source": "plaid"
+}
+```
+
+#### Accounts bank details
+
+Get account's bank details
+
+```typescript
+await sdk.accounts.getBankDetails('some-account-id');
+```
+
+Method returns paginated response with [Account bank detail Object](#account-bank-details-object)
