@@ -1,4 +1,14 @@
-import { sdk, testUserId, testUserClientId, testAccountId, connectTestAccount, testPlaidAccountId, testEmail } from './env';
+import { 
+  sdk, 
+  testUserId, 
+  testUserClientId, 
+  testAccountId, 
+  testPlaidAccountId, 
+  testClientKey,
+  testProviderId,
+  testApiKey,
+  testApiSecret,
+} from './env';
 
 describe(`user API`, () => {
   beforeAll(async () => {
@@ -7,9 +17,9 @@ describe(`user API`, () => {
 
   describe('create user', () => {
     describe('should',  () => {
-      it('return new user',  async () => {
+      it('return new user',  async () => {        
         const user = await sdk.users.create(
-          { email: testEmail, client_user_id: testUserClientId },
+          { client_user_id: testUserClientId },
         );
 
         expect(user).toEqual({
@@ -23,7 +33,9 @@ describe(`user API`, () => {
 
   it(`should return user access token`, async () => {
     const data = await sdk.users.createSession(testUserId);
+    console.log(data);
     
+
     expect(data).toEqual(expect.objectContaining({
       token: expect.any(String),
       expires_at: expect.any(String),
@@ -31,48 +43,24 @@ describe(`user API`, () => {
   });
 
   describe('add/remove account to existing user', () => {
-    let accountId;
-
-    beforeAll(async () => {
-      accountId = await connectTestAccount();
-    });
-
     describe('should',  () => {
       it('return account',  async () => {
         const account = await sdk.users.addAccount(
           { id: testUserId },
-          { email: testEmail, client_user_id: testUserClientId },
+          { 
+            client_key: testClientKey, 
+            provider_id: Number(testProviderId) 
+          },
+          {
+            apiKey: testApiKey,
+            apiSecret: testApiSecret,
+          }
         );
 
         expect(account).toEqual({
-          id: expect.any(String),
-          provider_id: expect.any(Number),
-          user_id: expect.any(String),
-          provider: expect.objectContaining({
-            id: expect.any(Number),
-            name: expect.any(String),
-            slug: expect.any(String),
-            strategy: expect.any(String),
-            logo: expect.any(String),
-          }),
-          subaccounts: expect.arrayContaining([
-            expect.objectContaining({
-              id: expect.any(String),
-              name: expect.any(String),
-              currency: expect.any(String),
-              balance: expect.any(String),
-              type: expect.any(String),
-              fiat_balance: expect.any(Number),
-              balance_updated_at: expect.any(String),
-              updated_at: expect.any(String),
-            }),
-          ]),
+          token: expect.any(String),
         });
       });
-    });
-
-    afterAll(async () => {
-      await sdk.users.removeAccount({ userId: testUserId, accountId });
     });
   });
 

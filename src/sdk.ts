@@ -31,10 +31,11 @@ export class MoneymadeSDK {
   }
 
   async init(): Promise<MoneymadeSDK> {
-    const { base_api_url } = await this.getProjectUrls();
-
+    // const { base_api_url } = await this.getProjectUrls();
+  
     this.axios = Axios.create({
-      baseURL: `${base_api_url}/api/${this.config.apiVersion || 'v1'}`,
+      // baseURL: `${base_api_url}/api/${this.config.apiVersion || 'v1'}`,
+      baseURL: `http://localhost:3019/api/${this.config.apiVersion || 'v1'}`,
       headers: {
         ['x-mm-api-key']: this.config.apiKey,
         ['content-type']: 'application/json',
@@ -47,6 +48,11 @@ export class MoneymadeSDK {
 
         if(request.url.endsWith('users') || request.url.endsWith('sessions')) {
           request.baseURL = request.baseURL.replace('v1', 'v2');
+        }
+        
+        if(request.url.endsWith('users/accounts')) {
+          request.baseURL = request.baseURL.replace('v1', 'v2');
+          request.url = request.url.replace('users', 'widget');
         }
 
         request.headers['x-mm-api-key'] = this.config.apiKey;

@@ -31,14 +31,21 @@ export class Users extends API {
 
   async addAccount(
     user: Pick<Users.User, 'id' | 'clientUserId'> | Users.User,
-    account: Users.CreateUserPayload,
+    query: Users.AddAccountParams,
+    data: Record<string, unknown>
   ): Promise<Users.Account> {
     this.checkIds(user.id, user.clientUserId);
 
+    const { token }  = await this.createSession(user.id || user.clientUserId);
+    
     return this.request({
-      url: `${user?.clientUserId || user?.id}/accounts`,
+      url: `accounts`,
       method: 'POST',
-      data: account,
+      headers: {
+          'authorization': token
+      },
+      data: JSON.stringify(data),
+      params: query
     });
   }
   
@@ -72,8 +79,13 @@ export class Users extends API {
 
 export namespace Users {
   export interface CreateUserPayload {
-    email: string;
+    email?: string;
     client_user_id: string;
+  }
+  
+  export interface AddAccountParams {
+    client_key: string;
+    provider_id?: number;
   }
 
   export interface Subaccount {
