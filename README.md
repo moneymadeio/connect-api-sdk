@@ -196,9 +196,9 @@ Accounts bank details object:
 
 ```json
 {
-  "accountNumber": "12321312",
+  "accountNumber": "000123456789",
   "holderName": "Holders name",
-  "routingNumber": "24124124",
+  "routingNumber": "110000000",
   "type": "bank",
   "balance": 0,
   "source": "plaid"
