@@ -14,6 +14,7 @@ export class MoneymadeSDK {
   providers: api.Providers;
   transactions: api.Transactions;
   accounts: api.Accounts;
+  webhooks: api.Webhooks;
 
   constructor(private config: MoneymadeSDK.Config) {}
 
@@ -67,6 +68,7 @@ export class MoneymadeSDK {
     this.providers = new api.Providers(this.axios);
     this.transactions = new api.Transactions(this.axios);
     this.accounts = new api.Accounts(this.axios);
+    this.webhooks = new api.Webhooks(this.axios);
 
     return this;
   }

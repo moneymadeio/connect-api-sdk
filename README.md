@@ -27,6 +27,12 @@ Moneymade Connect API official nodejs SDK
 - [Transactions API](#transactions-api)
   - [Transaction Object](#transaction-object)
   - [Transaction retrieving](#transaction-retrieving)
+- [Webhooks API](#webhooks-api)
+  - [Webhook Object](#webhook-object)
+  - [Webhook creation](#webhook-creation)
+  - [Webhooks retrieving](#webhooks-retrieving)
+  - [Webhook retrieving](#webhook-retrieving)
+  - [Webhook deleting](#webhook-deleting)
 
 ## Installation
 
@@ -313,3 +319,61 @@ await sdk.transactions.getList({
 ```
 
 Method returns paginated response with [transaction objects](#transaction-object)
+
+## Webhooks API
+
+
+#### Webhook Object
+
+Webhook object contains following data:
+
+```json
+{
+  "id": "cd68c98c-6853-47e6-a48a-cc2c4362d971", // webhook id
+  "url": "http://exaple.com", // url for webhook
+}
+```
+
+
+#### Webhook creation
+
+Webhook creation method requires "url" parameter.
+
+```typescript
+await sdk.webhooks.create('some url');
+```
+
+Method returns response with [webhook object](#webhook-object)
+
+
+#### Webhooks retrieving
+
+Webhooks retrieving method requires no parameters.
+
+```typescript
+await sdk.webhooks.getList();
+```
+
+Method returns response with array of [webhook objects](#webhook-object)
+
+
+#### Webhook retrieving
+
+Webhook retrieving method requires "id" parameter of webhook.
+
+```typescript
+await sdk.webhooks.getOne('some-webhook-id');
+```
+
+Method returns response with [webhook object](#webhook-object)
+
+
+#### Webhook deleting
+
+Webhook deleting method requires "id" parameter of webhook.
+
+```typescript
+await sdk.webhooks.deleteWebhook('some-webhook-id');
+```
+
+Method returns 200 status code if successfully deleted
