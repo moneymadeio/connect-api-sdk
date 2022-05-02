@@ -32,11 +32,10 @@ export class MoneymadeSDK {
   }
 
   async init(): Promise<MoneymadeSDK> {
-    // const { base_api_url } = await this.getProjectUrls();
+    const { base_api_url } = await this.getProjectUrls();
 
     this.axios = Axios.create({
-      // baseURL: `${base_api_url}/api/${this.config.apiVersion || 'v1'}`,
-      baseURL: `http://localhost:3019/api/v1`,
+      baseURL: `${base_api_url}/api/${this.config.apiVersion || 'v1'}`,
       headers: {
         ['x-mm-api-key']: this.config.apiKey,
         ['content-type']: 'application/json',
