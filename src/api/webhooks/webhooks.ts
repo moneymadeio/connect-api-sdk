@@ -12,13 +12,13 @@ export class Webhooks extends API {
     });
   }
   
-  getWebhooks(): Promise<Webhooks.Webhook[]> {
+  getList(): Promise<Webhooks.Webhook[]> {
     return this.request({
       method: 'GET',
     });
   }
  
-  getWebhook(id: string): Promise<Webhooks.Webhook> {
+  getOne(id: string): Promise<Webhooks.Webhook> {
     return this.request({
       url: `${id}`,
       method: 'GET',

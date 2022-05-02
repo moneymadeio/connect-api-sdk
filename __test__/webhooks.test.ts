@@ -20,7 +20,7 @@ describe(`webhooks API`, () => {
 
   describe('should return webhooks', () => {
     it('should return users webhooks', async () => {
-      const data = await sdk.webhooks.getWebhooks();
+      const data = await sdk.webhooks.getList();
       
       expect(data).toEqual(
         expect.arrayContaining([
@@ -35,7 +35,7 @@ describe(`webhooks API`, () => {
   
   describe('should return webhook by its id', () => {
     it('should return webhook', async () => {
-      const data = await sdk.webhooks.getWebhook(testWebhookId);
+      const data = await sdk.webhooks.getOne(testWebhookId);
 
       expect(data).toEqual({
         id: expect.any(String),
