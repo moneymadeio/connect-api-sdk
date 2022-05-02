@@ -351,7 +351,7 @@ Method returns response with [webhook object](#webhook-object)
 Webhooks retrieving method requires no parameters.
 
 ```typescript
-await sdk.webhooks.getWebhooks();
+await sdk.webhooks.getList();
 ```
 
 Method returns response with array of [webhook objects](#webhook-object)
@@ -362,7 +362,7 @@ Method returns response with array of [webhook objects](#webhook-object)
 Webhook retrieving method requires "id" parameter of webhook.
 
 ```typescript
-await sdk.webhooks.getWebhook('some-webhook-id');
+await sdk.webhooks.getOne('some-webhook-id');
 ```
 
 Method returns response with [webhook object](#webhook-object)
