@@ -322,6 +322,7 @@ Method returns paginated response with [transaction objects](#transaction-object
 
 ## Webhooks API
 
+
 #### Webhook Object
 
 Webhook object contains following data:
@@ -333,6 +334,7 @@ Webhook object contains following data:
 }
 ```
 
+
 #### Webhook creation
 
 Webhook creation method requires "url" parameter.
@@ -341,7 +343,8 @@ Webhook creation method requires "url" parameter.
 await sdk.webhooks.create('some url');
 ```
 
-Method returns paginated response with [webhook object](#webhook-object)
+Method returns response with [webhook object](#webhook-object)
+
 
 #### Webhooks retrieving
 
@@ -351,7 +354,8 @@ Webhooks retrieving method requires no parameters.
 await sdk.webhooks.getWebhooks();
 ```
 
-Method returns paginated response with [webhook objects](#webhook-object)
+Method returns response with array of [webhook objects](#webhook-object)
+
 
 #### Webhook retrieving
 
@@ -361,9 +365,10 @@ Webhook retrieving method requires "id" parameter of webhook.
 await sdk.webhooks.getWebhook('some-webhook-id');
 ```
 
-Method returns paginated response with [webhook object](#webhook-object)
+Method returns response with [webhook object](#webhook-object)
 
-#### Webhook Webhook deleting
+
+#### Webhook deleting
 
 Webhook deleting method requires "id" parameter of webhook.
 
