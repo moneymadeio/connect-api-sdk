@@ -125,11 +125,19 @@ This method returns newly created [user object](#user-object).
 
 Creating a new token for user. This token is used by widget only.
 
-
 ```typescript
 // you can use userId from User Object or your internal user id
 // (if internal user id was used as client_user_id on user creation)
 await moneymade.users.createSession('userId'); 
+```
+
+Optionally, you can pass array of "scopes" as the second parameter
+scopes values are: "accounts", "transactions", "banking", "holdings"
+
+```typescript
+// you can use userId from User Object or your internal user id
+// (if internal user id was used as client_user_id on user creation)
+await moneymade.users.createSession('userId', ["accounts", "banking"]); 
 ```
 
 #### User retrieving

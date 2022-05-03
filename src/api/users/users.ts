@@ -16,11 +16,12 @@ export class Users extends API {
     })
   }
   
-  async createSession(userId: string): Promise<Users.UserSession> {
+  async createSession(userId: string, scopes?: Users.Scope[]): Promise<Users.UserSession> {
     return this.request({
       url: `${userId}/sessions`,
       method: 'POST',
-    })
+      ...(scopes &&  { data : { scopes }}),
+    });
   }
 
   async getOne(userId?: string, clientUserId?: string): Promise<Users.User> {
@@ -96,6 +97,13 @@ export namespace Users {
   export interface UserSession {
     token: string;
     expires_at: string;
+  }
+
+  export enum Scope {
+    Accounts = 'accounts',
+    Banking = 'banking',
+    Transactions = 'transactions',
+    Holdings = 'holdings',
   }
 
   export interface User {
