@@ -20,9 +20,9 @@ export class Accounts extends API {
 
 export namespace Accounts {
   export interface BankDetails {
-    accountNumber: string;
-    holderName: string;
-    routingNumber: string;
+    account_number: string;
+    holder_name: string;
+    routing_number: string;
     type: string;
     balance: number;
     source: string;

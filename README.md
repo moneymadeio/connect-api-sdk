@@ -17,6 +17,8 @@ Moneymade Connect API official nodejs SDK
 - [Accounts API](#accounts-api)
   - [Account bank details object](#account-bank-details-object)
   - [Accounts bank details](#accounts-bank-details)
+  - [Account holdings object](#account-holdings-object)
+  - [Accounts retrieve holdings](#accounts-retrieve-holdings)
 - [Provider API](#provider-api)
   - [Provider object](#provider-object)
   - [Providers retrieving](#providers-retrieving)
@@ -202,9 +204,9 @@ Accounts bank details object:
 
 ```json
 {
-  "accountNumber": "12321312",
-  "holderName": "Holders name",
-  "routingNumber": "24124124",
+  "account_number": "12321312",
+  "holder_name": "Holders name",
+  "routing_number": "24124124",
   "type": "bank",
   "balance": 0,
   "source": "plaid"
@@ -219,7 +221,36 @@ Get account's bank details
 await sdk.accounts.getBankDetails('some-account-id');
 ```
 
-Method returns paginated response with [Account bank detail Object](#account-bank-details-object)
+Method returns response with array of [Account bank detail Object](#account-bank-details-object)
+
+
+#### Account holdings object
+
+Accounts holding object:
+
+```json
+{
+  "account_id": "test-account-id",
+  "subaccount_id": "test-subaccount-id",
+  "ticker": "Ticker",
+  "name": "Name",
+  "isin": "",
+  "type": "bank",
+  "amount": 0,
+  "current_price":0,
+  "current_amount_price":0
+}
+```
+
+#### Accounts retrieve holdings
+
+Get account's holdings
+
+```typescript
+await sdk.accounts.getHoldings('some-account-id');
+```
+
+Method returns response with array of [Account bank detail Object](#account-holdings-object)
 
 ## Provider API
 #### Provider object
