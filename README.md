@@ -250,7 +250,7 @@ Get account's holdings
 await sdk.accounts.getHoldings('some-account-id');
 ```
 
-Method returns response with array of [Account bank detail Object](#account-holdings-object)
+Method returns response with array of [Account holdings object](#account-holdings-object)
 
 ## Provider API
 #### Provider object

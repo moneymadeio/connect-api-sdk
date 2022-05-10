@@ -1,4 +1,4 @@
-import { API } from "../../core/api-entity";
+import { API } from '../../core/api-entity';
 
 export class Accounts extends API {
   entityUrl = 'accounts';
