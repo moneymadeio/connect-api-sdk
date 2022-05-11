@@ -1,4 +1,5 @@
 import { sdk, testUserId, testUserClientId, testAccountId, connectTestAccount, testPlaidAccountId, testEmail } from './env';
+import { Users } from '../src/api/users';
 
 describe(`user API`, () => {
   beforeAll(async () => {
@@ -23,6 +24,21 @@ describe(`user API`, () => {
 
   it(`should return user access token`, async () => {
     const data = await sdk.users.createSession(testUserId);
+    
+    expect(data).toEqual(expect.objectContaining({
+      token: expect.any(String),
+      expires_at: expect.any(String),
+    }));
+  });
+  
+  it(`should create user token with scopes`, async () => {
+    const data = await sdk.users.createSession(
+      testUserId, 
+      [ 
+        Users.Scope.Accounts, 
+        Users.Scope.AccountsBanking 
+      ]
+      );
     
     expect(data).toEqual(expect.objectContaining({
       token: expect.any(String),
