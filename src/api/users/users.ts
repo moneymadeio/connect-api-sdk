@@ -100,10 +100,12 @@ export namespace Users {
   }
 
   export enum Scope {
+    All = '*',
     Accounts = 'accounts',
-    Banking = 'banking',
-    Transactions = 'transactions',
-    Holdings = 'holdings',
+    AccountsBanking = 'accounts:banking',
+    AccountsTransactions = 'accounts:transactions',
+    AccountsHoldings = 'accounts:holdings',
+    AccountsBalances = 'accounts:balances',
   }
 
   export interface User {
