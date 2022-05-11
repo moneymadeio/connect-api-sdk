@@ -36,7 +36,7 @@ describe(`user API`, () => {
       testUserId, 
       [ 
         Users.Scope.Accounts, 
-        Users.Scope.Banking 
+        Users.Scope.AccountsBanking 
       ]
       );
     

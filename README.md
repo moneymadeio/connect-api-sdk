@@ -132,7 +132,8 @@ await moneymade.users.createSession('userId');
 ```
 
 Optionally, you can pass array of "scopes" as the second parameter
-scopes values are: "accounts", "transactions", "banking", "holdings"
+scopes values are: "*", "accounts", "accounts:banking", "accounts:transactions", "accounts:holdings", "accounts:balances"
+
 
 ```typescript
 // you can use userId from User Object or your internal user id
