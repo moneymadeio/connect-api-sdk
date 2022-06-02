@@ -22,8 +22,8 @@ describe('Providers API', () => {
     );
   });
 
-  it(`getOne should return provider by id`, async () => {
-    expect(await sdk.providers.getOne('binance')).toEqual(
+  it(`getOne should return provider by id`, async () => {    
+    expect(await sdk.providers.getOne(1)).toEqual(
       expect.objectContaining({
         id: expect.any(Number),
         name: expect.any(String),
