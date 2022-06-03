@@ -4,9 +4,8 @@ export class Transactions extends API {
   protected entityUrl = 'users';
   
   async getList(queryParams: Transactions.GetTransactionsRequest) {
-    const { accountId, userId, ticker, offset, limit } = queryParams;
+    const { accountId, userId, offset, limit } = queryParams;
     const params = {
-      ticker,
       limit: limit || 25,
       offset: offset || 0,
     };
@@ -22,7 +21,6 @@ export namespace Transactions {
   export interface GetTransactionsRequest extends API.PaginatedRequest {
     userId: string;
     accountId: string;
-    ticker?: string[];
   }
 
   export enum TransactionStatus {

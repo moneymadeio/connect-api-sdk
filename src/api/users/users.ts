@@ -20,7 +20,7 @@ export class Users extends API {
     return this.request({
       url: `${userId}/sessions`,
       method: 'POST',
-      ...(scopes &&  { data : { scopes }}),
+      ...(scopes &&  { data : { scopes } }),
     });
   }
 
