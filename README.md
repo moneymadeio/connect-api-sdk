@@ -22,7 +22,7 @@ Moneymade Connect API official nodejs SDK
 - [Provider API](#provider-api)
   - [Provider object](#provider-object)
   - [Providers retrieving](#providers-retrieving)
-  - [Provider retrieving by slug](#provider-retrieving-by-slug)
+  - [Provider retrieving by id](#provider-retrieving-by-id)
 - [Currencies API](#currencies-api)
   - [Currency object](#currency-object)
   - [Currency retrieving](#currency-retrieving)
@@ -292,12 +292,12 @@ Use following method to fetch providers.
 Method returns array with [provider objects](#provider-object).
 NOTE: Pagination will be added soon. (in Dec 5 2021).
 
-#### Provider retrieving by slug
+#### Provider retrieving by id
 
-Use following method to fetch provider by slug.
+Use following method to fetch provider by id.
 
 ```typescript
-await moneymade.providers.getOne('coinbase');
+await moneymade.providers.getOne(1);
 ```
 Method returns [provider object](#provider-object).
 
