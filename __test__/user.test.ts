@@ -35,7 +35,7 @@ describe(`user API`, () => {
     const data = await sdk.users.createSession(
       testUserId, 
       [ 
-        Users.Scope.Accounts, 
+        Users.Scope.AccountsBalances, 
         Users.Scope.AccountsBanking 
       ]
     );
